@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Place } from './place';
-import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +13,12 @@ export class PlaceService {
 	
 	db: AngularFirestore;
 	
-	constructor(
-		private messageService: MessageService,
-		db: AngularFirestore
-	) {
+	constructor(db: AngularFirestore) {
 		db.collection('places').valueChanges();
 		this.db = db;
 	}
 	
 	getPlaces(): Observable<any[]> {
-		this.messageService.add('PlaceService: fetched places');
 		return this.db.collection('places').valueChanges()
 			.pipe(
 				catchError(this.handleError('getPlaces', []))
@@ -53,7 +48,7 @@ export class PlaceService {
   
 	/** Log a HeroService message with the MessageService */
 	private log(message: string) {
-	this.messageService.add(`HeroService: ${message}`);
+		console.log(`HeroService: ${message}`);
 	}
   
 }

@@ -1,4 +1,8 @@
+import { Defect } from './defect';
+
 export class Place {
-  floor: number;
-  name: string;
+	id: string;
+	name: string;
+	floor: number;
+	defects: Defect[];
 }

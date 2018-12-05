@@ -3,7 +3,7 @@
 <h2>Defects for place: {{ place.name }}</h2>
 <ul class="defects">
   <li *ngFor="let defect of defects"(click)="onSelect(defect)">
-    <span class="badge">{{defect.id}}</span> {{defect.name}}
+    <span class="badge">{{defect.name}}</span>
   </li>
 </ul>
 

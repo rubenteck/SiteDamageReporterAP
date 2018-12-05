@@ -1,4 +1,8 @@
 export class Defect {
-  description: string;
-  name: string;
+	name: string;
+	description: string;
+	status: number;
+	severity: number;
+	lastEdited: Date;
+	pictures: string[];
 }

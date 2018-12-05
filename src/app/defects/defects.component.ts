@@ -34,9 +34,22 @@ export class DefectsComponent implements OnInit {
 	}
 	
 	getPlace(): void {
-		const name = +this.route.snapshot.paramMap.get('name');
-		this.places = this.placeService.getPlaces().subscribe(places => this.places = places);
-		this.places.forEach(function(item, index, arr){if(item.name == name.toString()){this.place = item}});
+		const name = this.route.snapshot.paramMap.get('name');
+		//console.log(name.toString());
+		
+		this.placeService.getPlaces().subscribe(places => {
+			this.places = places;
+			//console.log(places);
+			
+			for (var i = 0, len = this.places.length; i < len; i++){
+				//console.log(this.places[i] + ": " + this.places[i].name);
+				if(this.places[i].name == name.toString()){
+					this.place = this.places[i];
+					this.getDefects();
+					return;
+				}
+			}
+		});
 	}
 	
 	getDefects(): void {
