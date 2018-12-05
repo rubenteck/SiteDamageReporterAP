@@ -1,0 +1,9 @@
+<h2>Places</h2>
+
+<ul class="places">
+  <li *ngFor="let place of places">
+	<a routerLink="/defects/{{place.name}}">
+	  <span class="badge">{{place.name}}</span>
+	</a>
+  </li>
+</ul>

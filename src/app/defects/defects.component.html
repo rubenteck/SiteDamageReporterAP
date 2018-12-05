@@ -1,0 +1,20 @@
+<button (click)="goBack()">go back</button>
+
+<h2>Defects for place: {{ place.name }}</h2>
+<ul class="defects">
+  <li *ngFor="let defect of defects"(click)="onSelect(defect)">
+    <span class="badge">{{defect.id}}</span> {{defect.name}}
+  </li>
+</ul>
+
+<div *ngIf="selectedDefect">
+ 
+  <h2>{{selectedDefect.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{selectedDefect.id}}</div>
+  <div>
+    <label>name:
+      <input [(ngModel)]="selectedDefect.name" placeholder="name">
+    </label>
+  </div>
+ 
+</div>
