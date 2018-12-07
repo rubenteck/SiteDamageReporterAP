@@ -1,20 +1,39 @@
-<button (click)="goBack()">go back</button>
+<div style="float:left;width:50%;">
 
-<h2>Defects for place: {{ place.name }}</h2>
-<ul class="defects">
-  <li *ngFor="let defect of defects"(click)="onSelect(defect)">
-    <span class="badge">{{defect.name}}</span>
-  </li>
-</ul>
+	<button (click)="goBack()">go back</button>
+	<br/>
 
-<div *ngIf="selectedDefect">
+	<h2>Defects for place: {{ place?.name }}</h2>
+	<ul class="defects">
+		<li *ngFor="let defect of defects"(click)="onSelect(defect)">
+			<span class="badge">{{defect?.name}}</span>
+		</li>
+	</ul>
+
+</div>
+
+
+<div *ngIf="selectedDefect" style="float:right;width:50%;">
  
-  <h2>{{selectedDefect.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{selectedDefect.id}}</div>
-  <div>
-    <label>name:
-      <input [(ngModel)]="selectedDefect.name" placeholder="name">
-    </label>
-  </div>
+	<br/>
+	
+	<h2>{{selectedDefect.name | uppercase}} Details</h2>
+	<div><span>name: </span>{{selectedDefect.name}}</div>
+	<div>
+		<label>description:
+			<input [(ngModel)]="selectedDefect.description" placeholder="description">
+		</label>
+	</div>
+	<div>
+		<label>status:
+			<input [(ngModel)]="selectedDefect.status" placeholder="status">
+		</label>
+	</div>
+	<div>
+		<label>severity:
+			<input [(ngModel)]="selectedDefect.severity" placeholder="severity">
+		</label>
+	</div>
+	<button (click)="save()">save</button>
  
 </div>

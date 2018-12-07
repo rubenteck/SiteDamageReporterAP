@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
 
 import { Place } from './place';
 
@@ -12,43 +12,34 @@ import { Place } from './place';
 export class PlaceService {
 	
 	db: AngularFirestore;
+	itemDoc: AngularFirestoreDocument<Place>;
+	
+	private placeCollection: AngularFirestoreCollection<Place>;
+	places: Observable<Place[]>;
 	
 	constructor(db: AngularFirestore) {
-		db.collection('places').valueChanges();
 		this.db = db;
 	}
 	
-	getPlaces(): Observable<any[]> {
-		return this.db.collection('places').valueChanges()
-			.pipe(
-				catchError(this.handleError('getPlaces', []))
-			);
+	getPlaces(): Observable<Place[]> {
+		this.placeCollection = this.db.collection<Place>('places');
+		// .snapshotChanges() returns a DocumentChangeAction[], which contains
+		// a lot of information about "what happened" with each change. If you want to
+		// get the data and the id use the map operator.
+		this.places = this.placeCollection.snapshotChanges().map(actions => {
+			return actions.map(a => {
+				const data = a.payload.doc.data() as Place;
+				const id = a.payload.doc.id;
+				return { id, ...data };
+			});
+		});
+		
+		return this.places;
 	}
 	
-	
-	/**
-	* Handle Http operation that failed.
-	* Let the app continue.
-	* @param operation - name of the operation that failed
-	* @param result - optional value to return as the observable result
-	*/
-	private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
- 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
- 
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
- 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-	}
-  
-	/** Log a HeroService message with the MessageService */
-	private log(message: string) {
-		console.log(`HeroService: ${message}`);
+	updatePlace(place: Place){
+		this.itemDoc = this.db.doc<Place>('places/' + place.id);
+		this.itemDoc.update(place);
 	}
   
 }

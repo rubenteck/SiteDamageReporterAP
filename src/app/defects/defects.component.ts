@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { AngularFirestoreCollection } from '@angular/fire/firestore';
 
 import { Defect } from '../defect';
 import { Place } from '../place';
@@ -39,7 +40,7 @@ export class DefectsComponent implements OnInit {
 		
 		this.placeService.getPlaces().subscribe(places => {
 			this.places = places;
-			//console.log(places);
+			//console.log(this.places);
 			
 			for (var i = 0, len = this.places.length; i < len; i++){
 				//console.log(this.places[i] + ": " + this.places[i].name);
@@ -54,10 +55,15 @@ export class DefectsComponent implements OnInit {
 	
 	getDefects(): void {
 		this.defects = this.place.defects;
+		console.log(this.place);
 	}
 
 	goBack(): void {
 		this.location.back();
+	}
+	
+	save(): void {
+		this.placeService.updatePlace(this.place);
 	}
 
 }
