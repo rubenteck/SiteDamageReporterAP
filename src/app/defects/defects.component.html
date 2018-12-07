@@ -34,6 +34,9 @@
 			<input [(ngModel)]="selectedDefect.severity" placeholder="severity">
 		</label>
 	</div>
+	
 	<button (click)="save()">save</button>
- 
+	
+	<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+	
 </div>
