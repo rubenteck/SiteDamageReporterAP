@@ -21,8 +21,7 @@ export class PlacesComponent implements OnInit {
 	}
 	
 	getPlaces(): void {
-		this.placeService.getPlaces().subscribe(places =>{ this.places = places; 
-		console.log(this.places);});
+		this.placeService.getPlaces().subscribe(places => this.places = places);
 	}
 
 

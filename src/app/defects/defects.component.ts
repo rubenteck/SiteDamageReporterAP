@@ -55,7 +55,6 @@ export class DefectsComponent implements OnInit {
 	
 	getDefects(): void {
 		this.defects = this.place.defects;
-		console.log(this.place);
 	}
 
 	goBack(): void {
@@ -63,6 +62,12 @@ export class DefectsComponent implements OnInit {
 	}
 	
 	save(): void {
+		for (var i = 0, len = this.place.defects.length; i < len; i++){
+			if(this.place.defects[i].name == this.selectedDefect.name){
+				this.place.defects[i] = this.selectedDefect;
+			}
+		}
+		
 		this.placeService.updatePlace(this.place);
 	}
 
