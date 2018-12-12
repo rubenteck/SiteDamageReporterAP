@@ -1,4 +1,4 @@
-<div style="float:left;width:50%;">
+<div style="float:left;width:40%;">
 
 	<button (click)="goBack()">go back</button>
 	<br/>
@@ -13,7 +13,7 @@
 </div>
 
 
-<div *ngIf="selectedDefect" style="float:right;width:50%;">
+<div *ngIf="selectedDefect" style="float:right;width:60%;">
  
 	<br/>
 	
@@ -35,7 +35,7 @@
 		</label>
 	</div>
 	
-	<button (click)="save()">save</button>
+	<button (click)="save()">save</button><br/><br/>
 	
 	<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
 	

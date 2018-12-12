@@ -60,7 +60,19 @@ export class DefectsComponent implements OnInit {
   
 	onSelect(defect: Defect): void {
 		this.selectedDefect = defect;
-		this.galleryImages = defect.pictures;
+		
+		//fill galleryImages
+		var obj = '[';
+		for (var i = 0, len = defect.pictures.length; i < len; i++){
+			obj += '{ "small": "' + defect.pictures[i] + '", "medium": "' + defect.pictures[i] + '", "big": "' + defect.pictures[i] + '"}';
+			if (i < len - 1){
+				obj += ', ';
+			}
+		}
+		obj += ']';
+		obj = JSON.parse(obj);
+		//console.log(obj);
+		this.galleryImages = obj;
 	}
 	
 	getPlace(): void {
