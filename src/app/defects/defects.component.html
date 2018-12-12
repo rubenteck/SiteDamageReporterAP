@@ -1,9 +1,9 @@
-<div style="float:left;width:40%;">
+<div style="float:left;width:35%;">
 
-	<button (click)="goBack()">go back</button>
+	<button (click)="goBack()">vorige pagina</button>
 	<br/>
 
-	<h2>Defects for place: {{ place?.name }}</h2>
+	<h2>Defecten voor: {{ place?.name }}</h2>
 	<ul class="defects">
 		<li *ngFor="let defect of defects"(click)="onSelect(defect)">
 			<span class="badge">{{defect?.name}}</span>
@@ -13,30 +13,29 @@
 </div>
 
 
-<div *ngIf="selectedDefect" style="float:right;width:60%;">
- 
-	<br/>
+<div style="float: right; width:60%;">
+	<h2>Details</h2>
+	<div *ngIf="selectedDefect">
+		
+		<div style="margin-bottom: 8px;"><span>name: </span>{{selectedDefect.name}}</div>
+		<div>
+			<label>description:
+				<input [(ngModel)]="selectedDefect.description" placeholder="description">
+			</label>
+		</div>
+		<div>
+			<label>status:
+				<input [(ngModel)]="selectedDefect.status" placeholder="status">
+			</label>
+		</div>
+		<div>
+			<label>severity:
+				<input [(ngModel)]="selectedDefect.severity" placeholder="severity">
+			</label>
+		</div>
 	
-	<h2>{{selectedDefect.name | uppercase}} Details</h2>
-	<div><span>name: </span>{{selectedDefect.name}}</div>
-	<div>
-		<label>description:
-			<input [(ngModel)]="selectedDefect.description" placeholder="description">
-		</label>
+		<button (click)="save()">save</button><br/>
+		<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+	
 	</div>
-	<div>
-		<label>status:
-			<input [(ngModel)]="selectedDefect.status" placeholder="status">
-		</label>
-	</div>
-	<div>
-		<label>severity:
-			<input [(ngModel)]="selectedDefect.severity" placeholder="severity">
-		</label>
-	</div>
-	
-	<button (click)="save()">save</button><br/><br/>
-	
-	<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-	
 </div>

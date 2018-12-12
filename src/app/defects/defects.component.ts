@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import 'hammerjs';
 
 import { Defect } from '../defect';
 import { Place } from '../place';
@@ -34,27 +35,28 @@ export class DefectsComponent implements OnInit {
 		this.getPlace();
 		
 		this.galleryOptions = [
-            {
-                width: '600px',
-                height: '400px',
-                thumbnailsColumns: 4,
-                imageAnimation: NgxGalleryAnimation.Slide
-            },
-            // max-width 800
-            {
-                breakpoint: 800,
-                width: '100%',
-                height: '600px',
-                imagePercent: 80,
-                thumbnailsPercent: 20,
-                thumbnailsMargin: 20,
-                thumbnailMargin: 20
-            },
-            // max-width 400
-            {
-                breakpoint: 400,
-                preview: false
-            }
+			{ 
+				"previewFullscreen": true, 
+				"imageAnimation": "slide", 
+				"previewAnimation": false, 
+				"previewInfinityMove": true, 
+				"imageInfinityMove": true, 
+				"previewKeyboardNavigation": true, 
+				"thumbnailsMoveSize": 4, 
+				"previewCloseOnClick": true, 
+				"previewCloseOnEsc": true, 
+				"previewZoom": true, 
+				"previewRotate": true, 
+				"imageSwipe": true, 
+				"thumbnailsSwipe": true, 
+				"previewSwipe": true, 
+				"imageArrowsAutoHide": true, 
+				"thumbnailsArrowsAutoHide": true 
+				//"arrowPrevIcon": "", 
+				//"arrowNextIcon": ""
+			},
+			{ "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3 },
+			{ "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2 }
         ];
 	}
   
@@ -70,9 +72,8 @@ export class DefectsComponent implements OnInit {
 			}
 		}
 		obj += ']';
-		obj = JSON.parse(obj);
-		//console.log(obj);
-		this.galleryImages = obj;
+		//console.log(JSON.parse(obj));
+		this.galleryImages = JSON.parse(obj);
 	}
 	
 	getPlace(): void {
