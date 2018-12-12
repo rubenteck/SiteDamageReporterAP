@@ -5,7 +5,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { NgxGalleryModule } from 'ngx-gallery';
-//import { HammerJS } from 'hammerjs';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +23,7 @@ import { DefectsComponent } from './defects/defects.component';
 	FormsModule,
     AppRoutingModule,
 	NgxGalleryModule,
-	//HammerJS,
+	ToastrModule.forRoot({newestOnTop: false,}), // ToastrModule added
 	AngularFireModule.initializeApp(environment.firebase),
 	AngularFirestoreModule // imports firebase/firestore, only needed for database features
   ],

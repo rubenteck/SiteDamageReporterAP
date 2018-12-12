@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import 'hammerjs';
+import { ToastrService } from 'ngx-toastr';
 
 import { Defect } from '../defect';
 import { Place } from '../place';
@@ -28,8 +29,9 @@ export class DefectsComponent implements OnInit {
 	constructor(
 	private route: ActivatedRoute,
 	private location: Location,
-	private placeService: PlaceService
-	) { }
+	private placeService: PlaceService,
+	private toastr: ToastrService
+	) {	}
 
 	ngOnInit() {
 		this.getPlace();
@@ -46,6 +48,9 @@ export class DefectsComponent implements OnInit {
 				"previewCloseOnClick": true, 
 				"previewCloseOnEsc": true, 
 				"previewZoom": true, 
+				"previewZoomStep": 1, 
+				"previewZoomMax": 5, 
+				"previewZoomMin": 1, 
 				"previewRotate": true, 
 				"imageSwipe": true, 
 				"thumbnailsSwipe": true, 
@@ -104,6 +109,16 @@ export class DefectsComponent implements OnInit {
 	}
 	
 	save(): void {
+		//input checks
+		if(this.selectedDefect.status!=1){
+			if(this.selectedDefect.repair_date==null || this.selectedDefect.responsible_person=="" || this.selectedDefect.responsible_instance==""){
+				this.toastr.error("kijk na of de velden 'reparatie datum', 'bevoegd persoon' en 'bevoegde instelling' ingevuld zijn");
+				return;
+			}
+		}
+		
+		//update data
+		this.selectedDefect.last_edited = new Date();
 		for (var i = 0, len = this.place.defects.length; i < len; i++){
 			if(this.place.defects[i].name == this.selectedDefect.name){
 				this.place.defects[i] = this.selectedDefect;
@@ -111,6 +126,7 @@ export class DefectsComponent implements OnInit {
 		}
 		
 		this.placeService.updatePlace(this.place);
+		this.toastr.success("saved!");
 	}
 
 }

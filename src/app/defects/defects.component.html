@@ -1,5 +1,5 @@
 <div style="float:left;width:35%;">
-
+	
 	<button (click)="goBack()">vorige pagina</button>
 	<br/>
 
@@ -17,20 +17,54 @@
 	<h2>Details</h2>
 	<div *ngIf="selectedDefect">
 		
-		<div style="margin-bottom: 8px;"><span>name: </span>{{selectedDefect.name}}</div>
+		<div style="margin-bottom: 8px;"><span>name: </span>{{ selectedDefect.name }}</div>
+		<div style="margin-bottom: 8px;"><span>laatst gewijzigd: </span>{{ selectedDefect.last_edited.toDate() | date : "short" }}</div>
 		<div>
-			<label>description:
-				<input [(ngModel)]="selectedDefect.description" placeholder="description">
+			<label>omschrijving:
+				<input [(ngModel)]="selectedDefect.description" placeholder="omschrijving">
 			</label>
 		</div>
 		<div>
 			<label>status:
-				<input [(ngModel)]="selectedDefect.status" placeholder="status">
+				<select [(ngModel)]="selectedDefect.status" placeholder="1">
+					<option value=1>nog niet in behandeling</option>
+					<option value=2>in behandeling</option>
+					<option value=3>opgelost</option>
+				</select>
 			</label>
 		</div>
 		<div>
 			<label>severity:
-				<input [(ngModel)]="selectedDefect.severity" placeholder="severity">
+				<select [(ngModel)]="selectedDefect.severity" placeholder="1">
+					<option value=1>1</option>
+					<option value=2>2</option>
+					<option value=3>3</option>
+					<option value=4>4</option>
+					<option value=5>5</option>
+				</select>
+			</label>
+		</div>
+		<div>
+			<label>reparatie datum:
+				<input type="date" [(ngModel)]="selectedDefect.repair_date" placeholder="dd/mm/jj">
+			</label>
+		</div>
+		<div>
+			<label>bevoegd persoon:
+				<input [(ngModel)]="selectedDefect.responsible_person" placeholder="bevoegd persoon">
+			</label>
+		</div>
+		<div>
+			<label>bevoegde instelling:
+				<select [(ngModel)]="selectedDefect.responsible_instance">
+					<option value="AP">AP</option>
+					<option value="Provincie">Provincie</option>
+				</select>
+			</label>
+		</div>
+		<div>
+			<label>extra info:
+				<input [(ngModel)]="selectedDefect.extra_note" placeholder="extra info">
 			</label>
 		</div>
 	
