@@ -6,17 +6,22 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { ToastrModule } from 'ngx-toastr';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PlacesComponent } from './places/places.component';
 import { DefectsComponent } from './defects/defects.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlacesComponent,
-    DefectsComponent
+    DefectsComponent,
+    AuthenticationComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,7 @@ import { DefectsComponent } from './defects/defects.component';
 	AngularFireModule.initializeApp(environment.firebase),
 	AngularFirestoreModule // imports firebase/firestore, only needed for database features
   ],
-  providers: [],
+  providers: [AngularFireAuth],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

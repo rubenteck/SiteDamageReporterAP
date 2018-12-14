@@ -1,2 +1,18 @@
-<h1>{{title}}</h1>
-<router-outlet></router-outlet>
+<div style="float:left;width:60%;">
+	<h1>{{title}}</h1>
+</div>
+
+<div style="float:right;width:40%;margin-top:26px;" *ngIf="afAuth.user | async as user; else showLogin">
+	<p style="width:50%;float:left;">Hallo {{ user.displayName }}!</p>
+	<button routerLink="/userInfo" style="width:20%;float:left;">User info</button>
+	<button (click)="logout()" style="width:20%;float:left;">Log uit</button>
+</div>
+
+<ng-template #showLogin>
+	<button routerLink="/authentication" style="width:5em;">Log in</button>
+</ng-template>
+
+<br/>
+<div style="float:left; width:100%;">
+	<router-outlet></router-outlet>
+</div>

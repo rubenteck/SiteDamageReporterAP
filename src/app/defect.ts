@@ -9,4 +9,5 @@ export class Defect {
 	responsible_person: string;
 	responsible_instance: string;
 	extra_note: string;
+	last_editor: string;
 }

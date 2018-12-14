@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
 import { Place } from './place';
 
@@ -11,17 +13,14 @@ import { Place } from './place';
 })
 export class PlaceService {
 	
-	db: AngularFirestore;
 	itemDoc: AngularFirestoreDocument<Place>;
 	
 	private placeCollection: AngularFirestoreCollection<Place>;
 	places: Observable<Place[]>;
 	
-	constructor(db: AngularFirestore) {
-		this.db = db;
-	}
+	constructor(public db: AngularFirestore) { }
 	
-	getPlaces(): Observable<Place[]> {
+	getPlaces(): Observable<Place[]> {		
 		this.placeCollection = this.db.collection<Place>('places');
 		// .snapshotChanges() returns a DocumentChangeAction[], which contains
 		// a lot of information about "what happened" with each change. If you want to
