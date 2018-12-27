@@ -6,15 +6,14 @@
 <ng-template #showLogin>
 	<div>
 		<label>e-mail:
-			<input [(ngModel)]="email" placeholder="user@email.com">
+			<input type="email" [(ngModel)]="email" placeholder="user@email.com">
 		</label>
 	</div>
 	<div>
 		<label>passwoord:
-			<input [(ngModel)]="password" placeholder="passwoord">
+			<input type="password" [(ngModel)]="password" placeholder="passwoord">
 		</label>
 	</div>
-	<button (click)="newUser()">New user</button>
 	<button (click)="login()">Login</button>
 	<button (click)="loginGoogle()">Login with Google</button>
 </ng-template>

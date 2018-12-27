@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-authentication',
@@ -9,24 +11,41 @@ import { auth } from 'firebase/app';
 })
 export class AuthenticationComponent implements OnInit {
 
-	email: string;
-	password: string;
+	email: string = "";
+	password: string = "";
 
-	constructor(public afAuth: AngularFireAuth) { }
+	constructor(public afAuth: AngularFireAuth, public router: Router, private toastr: ToastrService) { }
 
 	ngOnInit() {
 	}
   
 	login(){
-		this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password);
+		if(this.email == "" || this.password == ""){
+			this.toastr.error("please make sure to fill in your e-mail and password");
+			return;
+		}
+		
+		this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password).then(
+			succes => {
+				this.toastr.success("logged in!");
+				this.router.navigate(['/places']);
+			},
+			error => {
+				this.toastr.error("couldn't log in!");
+			}
+		);
 	}
   
 	loginGoogle() {
-		this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-	}
-  
-	newUser(){
-		this.afAuth.auth.createUserWithEmailAndPassword(this.email, this.password);
+		this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
+			succes => {
+				this.router.navigate(['/places']);
+				this.toastr.success("logged in!");
+			},
+			error => {
+				this.toastr.error("couldn't log in!");
+			}
+		);
 	}
 
 }

@@ -8,8 +8,10 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Defect } from '../defect';
 import { Place } from '../place';
+import { User } from '../user';
 
 import { PlaceService } from '../place.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-defects',
@@ -22,6 +24,7 @@ export class DefectsComponent implements OnInit {
 	place: Place;
 	selectedDefect: Defect;
 	defects: Defect[];
+	lastEditor: User;
 	
 	galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
@@ -30,6 +33,7 @@ export class DefectsComponent implements OnInit {
 	private route: ActivatedRoute,
 	private location: Location,
 	private placeService: PlaceService,
+	private userService: UserService,
 	private toastr: ToastrService
 	) {	}
 
@@ -67,6 +71,7 @@ export class DefectsComponent implements OnInit {
   
 	onSelect(defect: Defect): void {
 		this.selectedDefect = defect;
+		this.userService.getUser(this.selectedDefect.last_editor).subscribe(user => this.lastEditor = user);
 		
 		//fill galleryImages
 		var obj = '[';
@@ -84,7 +89,6 @@ export class DefectsComponent implements OnInit {
 	getPlace(): void {
 		const name = this.route.snapshot.paramMap.get('name');
 		//console.log(name.toString());
-		
 		this.placeService.getPlaces().subscribe(places => {
 			this.places = places;
 			//console.log(this.places);
@@ -118,15 +122,18 @@ export class DefectsComponent implements OnInit {
 		}
 		
 		//update data
-		this.selectedDefect.last_edited = new Date();
-		for (var i = 0, len = this.place.defects.length; i < len; i++){
-			if(this.place.defects[i].name == this.selectedDefect.name){
-				this.place.defects[i] = this.selectedDefect;
+		this.userService.getCurrentUser().subscribe(user => {
+			//console.log(user);
+			this.selectedDefect.last_editor = user.uid;
+			this.selectedDefect.last_edited = new Date();
+			for (var i = 0, len = this.place.defects.length; i < len; i++){
+				if(this.place.defects[i].name == this.selectedDefect.name){
+					this.place.defects[i] = this.selectedDefect;
+				}
 			}
-		}
 		
-		this.placeService.updatePlace(this.place);
-		this.toastr.success("saved!");
+			this.placeService.updatePlace(this.place);
+		});
 	}
 
 }

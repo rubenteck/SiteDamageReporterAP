@@ -1,3 +1,9 @@
-<p>
-  user-info works!
-</p>
+<div *ngIf="selectedDefect">
+	<div style="margin-bottom: 8px;"><span>name: </span>{{ selectedDefect.name }}</div>
+	
+	<div>
+		<label>omschrijving:
+			<input [(ngModel)]="selectedDefect.description" placeholder="omschrijving">
+		</label>
+	</div>
+</div>

@@ -6,6 +6,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +29,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
 	FormsModule,
     AppRoutingModule,
 	NgxGalleryModule,
+	BrowserAnimationsModule,
 	ToastrModule.forRoot({newestOnTop: false,}), // ToastrModule added
 	AngularFireModule.initializeApp(environment.firebase),
 	AngularFirestoreModule // imports firebase/firestore, only needed for database features

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
 
 import { User } from '../user';
 
@@ -15,15 +13,14 @@ export class UserInfoComponent implements OnInit {
 	
 	user: User;
 
-	constructor(public afAuth: AngularFireAuth) { }
+	constructor(private userService: UserService) { }
 
 	ngOnInit() {
-		this.afAuth.authState.subscribe(res => {console.log(res.uid);});
 		this.getUserInfo();
 	}
   
 	getUserInfo(){
-		//UserService.getUserInfo().subscribe(user => this.user = user);
+		this.userService.getCurrentUser().subscribe(user => this.user = user);
 	}
 
 }
