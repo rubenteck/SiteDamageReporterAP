@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 import { PlacesComponent } from './places/places.component';
 import { DefectsComponent } from './defects/defects.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
-import { UserInfoComponent } from './user-info/user-info.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
     PlacesComponent,
     DefectsComponent,
     AuthenticationComponent,
-    UserInfoComponent
+    UsersComponent
   ],
   imports: [
     BrowserModule,

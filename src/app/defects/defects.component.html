@@ -5,27 +5,27 @@
 
 	<h2>Defecten voor: {{ place?.name }}</h2>
 	<ul class="defects" *ngIf="defects; else showNoDefects">
-		<li *ngFor="let defect of defects"(click)="onSelect(defect)">
-			<span class="badge">{{defect?.name}}</span>
+		<li *ngFor="let defect of defects; let i = index" [class.active]="index === i"(click)="onSelect(defect); setIndex(i)">
+			{{defect?.name}}
 		</li>
 	</ul>
 
 </div>
 
 <ng-template #showNoDefects>
-	<p>er zijn geen defecten voor dit lokaal</p>
+	<p style="margin-left:2em;">er zijn geen defecten voor dit lokaal</p>
 </ng-template>
 
 
-<div style="float: right; width:60%;">
-	<h2>Details</h2>
-	<div *ngIf="selectedDefect">
+<div style="float: right; width:60%;" *ngIf="selectedDefect">
+	<h2 style="padding-left:0px;">Details:</h2>
+	<div>
 		
-		<div style="margin-bottom: 8px;"><span>name: </span>{{ selectedDefect.name }}</div>
-		<div style="margin-bottom: 8px;"><span>laatst gewijzigd op: </span>{{ selectedDefect.last_edited.seconds * 1000 | date : "dd-MM-yyyy" }}</div>
-		<div style="margin-bottom: 8px;"><span>laatst gewijzigd door: </span>
-			<p *ngIf="lastEditor; else showNoLastEditor">{{ lastEditor.display_name }}</p>
-			<ng-template #showNoLastEditor>geen user gevonden</ng-template>
+		<div style="margin-bottom: 8px;"><span>name: {{ selectedDefect.name }}</span></div>
+		<div style="margin-bottom: 8px;"><span>laatst gewijzigd op: {{ selectedDefect.last_edited.seconds * 1000 | date : "dd-MM-yyyy" }}</span></div>
+		<div style="margin-bottom: 8px;"><span>laatst gewijzigd door: 
+			<span *ngIf="lastEditor; else showNoLastEditor">{{ lastEditor.display_name }}</span>
+			<ng-template #showNoLastEditor>geen user gevonden</ng-template></span>
 		</div>
 		<div>
 			<label>omschrijving:

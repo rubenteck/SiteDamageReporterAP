@@ -5,6 +5,7 @@ import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import 'hammerjs';
 import { ToastrService } from 'ngx-toastr';
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
 import { Defect } from '../defect';
 import { Place } from '../place';
@@ -13,6 +14,9 @@ import { User } from '../user';
 import { PlaceService } from '../place.service';
 import { UserService } from '../user.service';
 
+@AutoUnsubscribe({event: 'onSelect'})
+@AutoUnsubscribe({event: 'ngOnDestroy'})
+@AutoUnsubscribe({event: 'save'})
 @Component({
   selector: 'app-defects',
   templateUrl: './defects.component.html',
@@ -25,6 +29,10 @@ export class DefectsComponent implements OnInit {
 	selectedDefect: Defect;
 	defects: Defect[];
 	lastEditor: User;
+	index: number;
+	userSub;
+	placesSub;
+	currentUserSub;
 	
 	galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
@@ -60,9 +68,7 @@ export class DefectsComponent implements OnInit {
 				"thumbnailsSwipe": true, 
 				"previewSwipe": true, 
 				"imageArrowsAutoHide": true, 
-				"thumbnailsArrowsAutoHide": true 
-				//"arrowPrevIcon": "", 
-				//"arrowNextIcon": ""
+				"thumbnailsArrowsAutoHide": true
 			},
 			{ "breakpoint": 500, "width": "300px", "height": "300px", "thumbnailsColumns": 3 },
 			{ "breakpoint": 300, "width": "100%", "height": "200px", "thumbnailsColumns": 2 }
@@ -71,7 +77,7 @@ export class DefectsComponent implements OnInit {
   
 	onSelect(defect: Defect): void {
 		this.selectedDefect = defect;
-		this.userService.getUser(this.selectedDefect.last_editor).subscribe(user => this.lastEditor = user);
+		this.userSub = this.userService.getUser(this.selectedDefect.last_editor).subscribe(user => this.lastEditor = user);
 		
 		//fill galleryImages
 		var obj = '[';
@@ -86,13 +92,18 @@ export class DefectsComponent implements OnInit {
 		this.galleryImages = JSON.parse(obj);
 	}
 	
+	setIndex(index: number){
+		this.index = index;
+		console.log(index);
+	}
+	
 	getPlace(): void {
 		const name = this.route.snapshot.paramMap.get('name');
 		//console.log(name.toString());
-		this.placeService.getPlaces().subscribe(places => {
+		this.placesSub = this.placeService.getPlaces().subscribe(places => {
 			this.places = places;
 			//console.log(this.places);
-			
+		
 			for (var i = 0, len = this.places.length; i < len; i++){
 				//console.log(this.places[i] + ": " + this.places[i].name);
 				if(this.places[i].name == name.toString()){
@@ -122,7 +133,10 @@ export class DefectsComponent implements OnInit {
 		}
 		
 		//update data
-		this.userService.getCurrentUser().subscribe(user => {
+		this.currentUserSub = this.userService.getCurrentUser().subscribe(user => {
+			if(user==null){
+				return;
+			}
 			//console.log(user);
 			this.selectedDefect.last_editor = user.uid;
 			this.selectedDefect.last_edited = new Date();
@@ -134,6 +148,10 @@ export class DefectsComponent implements OnInit {
 		
 			this.placeService.updatePlace(this.place);
 		});
+	}
+	
+	ngOnDestroy(){
+		
 	}
 
 }

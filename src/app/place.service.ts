@@ -6,8 +6,12 @@ import 'rxjs/add/operator/map';
 import { ToastrService } from 'ngx-toastr';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
+import 'rxjs/add/observable/empty';
+import { Router } from '@angular/router';
 
 import { Place } from './place';
+
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,33 +23,39 @@ export class PlaceService {
 	private placeCollection: AngularFirestoreCollection<Place>;
 	places: Observable<Place[]>;
 	
-	constructor(private db: AngularFirestore, private toastr: ToastrService, private afAuth: AngularFireAuth) { }
+	index: number = 0;
+	
+	constructor(private db: AngularFirestore, private toastr: ToastrService, private afAuth: AngularFireAuth, private userService: UserService, private router: Router) { }
 	
 	getPlaces(): Observable<Place[]> {
-		//login check checks to fast on startup (only a problem for testing and if user can be automatically logged in) and gives error with observable
-		/*if(this.afAuth.auth.currentUser==null){
-			this.toastr.error("please make sure you are logged in");
+		//check if logged in
+		if(this.afAuth.auth.currentUser==null && this.index < 3){
+			this.index++;
+			setTimeout(() => {
+				return this.getPlaces();
+			}, 1000);
 		}
-		else{*/
+		else if(this.afAuth.auth.currentUser==null){
+			this.router.navigate(['/authentication']);
+			this.toastr.error("controleer of u bent ingelogd");
+		}
 		
-			//get places
-			this.placeCollection = this.db.collection<Place>('places');
-			this.places = this.placeCollection.snapshotChanges().map(actions => {
-				return actions.map(a => {
-					const data = a.payload.doc.data() as Place;
-					const id = a.payload.doc.id;
-					return { id, ...data };
-				});
+		//get places
+		this.placeCollection = this.db.collection<Place>('places');
+		this.places = this.placeCollection.snapshotChanges().map(actions => {
+			return actions.map(a => {
+				const data = a.payload.doc.data() as Place;
+				const id = a.payload.doc.id;
+				return { id, ...data };
 			});
-			return this.places;
-			
-		//}
+		});
+		return this.places;	
 	}
 	
 	updatePlace(place: Place){
 		//check logged in
 		if(this.afAuth.auth.currentUser==null){
-			this.toastr.error("please make sure you are logged in");
+			this.toastr.error("controleer of u bent ingelogd");
 			return;
 		}
 		
@@ -53,10 +63,10 @@ export class PlaceService {
 		this.itemDoc = this.db.doc<Place>('places/' + place.id);
 		this.itemDoc.update(place).then(
 			succes => {
-				this.toastr.success("saved!");
+				this.toastr.success("het defect is aangepast!");
 			},
 			error => {
-				this.toastr.error("something went wrong!");
+				this.toastr.error("er ging iets mis!");
 			}
 		);
 	}

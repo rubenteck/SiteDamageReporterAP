@@ -3,36 +3,114 @@ h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
+  padding-left: 1em;
 }
+
 h2, h3 {
   color: #444;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
+  padding-left: 1em;
 }
+
 body {
-  margin: 2em;
+	margin:0px;
+	padding:0px;
 }
+
 body, input[type="text"], button {
   color: #888;
   font-family: Cambria, Georgia;
 }
-/* everywhere else */
+
+p, a, li{
+	display: block;
+	height:100%;
+	color:black;
+	text-decoration:none;
+}
+
+span, label {
+	color:black;
+}
+
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
 
 input, select {
-  width: 100%;
+  width: calc(100% - 20px);
   height: 18px;
   margin-bottom: 8px;
+  margin-left: 10px;
 }
 
 button {
-	width: 100%;
+	width: calc(100% - 20px);
 	height: 2em;
 	margin-bottom: 8px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+*:focus {
+	outline:0; /* removes blue border */
 }
 
 li {
-	margin-bottom: 8px;
+	height: 24px;
+	list-style-type:none;
+	border-bottom: 1px solid grey;
+	margin-right: 10px;
 }
+
+li:hover, a:hover {
+	background-color: #e60000;
+	color: white;
+	border-bottom-color: black;
+}
+
+li.active {
+	background-color: #e60000;
+	color: white;
+	border-bottom-color: black;
+}
+
+button.menu {
+	width: 6em;
+	height: 54px;
+	float: right;
+	margin: 0px;
+	padding: 0px;
+	color: white;
+	background-color: #e60000;
+	border: 0;
+	border-left: 1px solid black;
+}
+
+button.menu:hover {
+	background-color: white;
+	color: black;
+}
+
+p.menu {
+	float: left;
+	width: 9em;
+	color: white;
+	text-align: center;
+}
+
+h1.menu {
+	float: left;
+	color: white;
+	margin:0px;
+}
+
+div.menu {
+	background-color: #e60000;
+	float: left;
+	margin:0px;
+	padding:0px;
+	width: 100%;
+}
+

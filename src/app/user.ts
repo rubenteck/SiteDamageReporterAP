@@ -5,4 +5,6 @@ export class User {
 	last_name: string;
 	role: number;
 	uid: string;
+	active: boolean;
+	admin: boolean;
 }

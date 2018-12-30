@@ -3,7 +3,7 @@
 <ul class="places">
   <li *ngFor="let place of places">
 	<a routerLink="/defects/{{place.name}}">
-	  <span class="badge">{{place.name}}</span>
+	  {{place.name}}
 	</a>
   </li>
 </ul>

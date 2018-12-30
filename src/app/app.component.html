@@ -1,18 +1,18 @@
-<div style="float:left;width:25em;">
-	<h1 routerLink="/places">{{title}}</h1>
+<div class="menu">
+	<h1 routerLink="/places" class="menu">{{title}}</h1>
+	
+	<div class="menu" style="width:30em;height:100%;float:right;position:relative;" *ngIf="afAuth.user | async as user; else showLogin">
+		<p class="menu">Hallo {{ user.displayName }}!</p>
+		<button (click)="logout()" class="menu">Log uit</button>
+		<button routerLink="/users" class="menu">Users</button>
+		<button routerLink="/places" class="menu">Plaatsen</button>
+	</div>
+	
+	<ng-template #showLogin>
+		<button routerLink="/authentication" style="width:5em;float:right" class="menu">Log in</button>
+	</ng-template>
 </div>
 
-<div style="float:right;width:28em;margin-top:26px;" *ngIf="afAuth.user | async as user; else showLogin">
-	<p style="width:9em;float:left;">Hallo {{ user.displayName }}!</p>
-	<button routerLink="/userInfo" style="width:6em;float:left;">User info</button>
-	<button (click)="logout()" style="width:6em;float:left;">Log uit</button>
-</div>
-
-<ng-template #showLogin>
-	<button routerLink="/authentication" style="width:5em;float:right">Log in</button>
-</ng-template>
-
-<br/>
-<div style="float:left; width:100%;">
+<div style="float:left; width:100%; margin-top:1em;">
 	<router-outlet></router-outlet>
 </div>

@@ -27,11 +27,12 @@ export class AuthenticationComponent implements OnInit {
 		
 		this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password).then(
 			succes => {
-				this.toastr.success("logged in!");
+				this.toastr.success("u bent succesvol ingelogd!");
 				this.router.navigate(['/places']);
 			},
 			error => {
-				this.toastr.error("couldn't log in!");
+				this.toastr.error("het inloggen is mislukt");
+				console.log(error);
 			}
 		);
 	}
@@ -40,10 +41,11 @@ export class AuthenticationComponent implements OnInit {
 		this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
 			succes => {
 				this.router.navigate(['/places']);
-				this.toastr.success("logged in!");
+				this.toastr.success("u bent succesvol ingelogd!");
 			},
 			error => {
-				this.toastr.error("couldn't log in!");
+				this.toastr.error("het inloggen is mislukt");
+				console.log(error);
 			}
 		);
 	}

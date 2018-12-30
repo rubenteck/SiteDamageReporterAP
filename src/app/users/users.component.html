@@ -1,0 +1,42 @@
+<div style="float:left;width:35%;">
+	
+	<br/>
+
+	<h2>Users:</h2>
+	<ul class="users" *ngIf="users">
+		<li *ngFor="let user of users; let i = index" [class.active]="index === i"(click)="onSelect(user); setIndex(i)">
+			{{user?.email}}
+		</li>
+	</ul>
+
+</div>
+
+<div style="float: right; width:60%;" *ngIf="selectedUser">
+	<h2 style="padding-left:0px;">Details:</h2>
+	<div>
+		
+		<div style="margin-bottom: 8px;"><span>voornaam: {{ selectedUser.first_name }}</span></div>
+		<div style="margin-bottom: 8px;"><span>achternaam: {{ selectedUser.last_name }}</span></div>
+		<div style="margin-bottom: 8px;"><span>email: {{ selectedUser.email }}</span></div>
+		<div style="margin-bottom: 8px;"><span>id: {{ selectedUser.uid }}</span></div>
+		<div style="margin-bottom: 8px;"><span>naam: {{ selectedUser.display_name }}</span></div>
+		<div style="margin-bottom: 8px;"><span>rol: {{ selectedUser.role }}</span></div>
+		<div>
+			<label>actief:
+				<select [(ngModel)]="selectedUser.active">
+					<option value=true>ja</option>
+					<option value=false>nee</option>
+				</select>
+			</label>
+		</div>	
+		<div>
+			<label>admin:
+				<select [(ngModel)]="selectedUser.admin">
+					<option value=true>ja</option>
+					<option value=false>nee</option>
+				</select>
+			</label>
+		</div>	
+		<button (click)="save()">save</button>
+	</div>
+</div>
