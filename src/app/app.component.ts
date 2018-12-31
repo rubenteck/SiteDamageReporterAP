@@ -17,13 +17,12 @@ export class AppComponent {
   
 	logout() {
 		//unsubscribe
-		
+		this.router.navigate(['/authentication']);
 		
 		//logout
 		this.afAuth.auth.signOut().then(
 			succces => {
 				this.toastr.success("u bent uitgelogd!");
-				this.router.navigate(['/authentication']);
 			},
 			error => {
 				this.toastr.error("er ging iets mis!");

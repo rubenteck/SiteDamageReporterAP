@@ -6,6 +6,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
 import 'hammerjs';
 import { ToastrService } from 'ngx-toastr';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+import { Router } from '@angular/router';
 
 import { Defect } from '../defect';
 import { Place } from '../place';
@@ -24,15 +25,14 @@ import { UserService } from '../user.service';
 })
 export class DefectsComponent implements OnInit {
 	
-	places: Place[];
 	place: Place;
 	selectedDefect: Defect;
 	defects: Defect[];
 	lastEditor: User;
-	index: number;
 	userSub;
-	placesSub;
-	currentUserSub;
+	placeSub;
+	currentUserSub1;
+	currentUserSub2;
 	
 	galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
@@ -42,11 +42,21 @@ export class DefectsComponent implements OnInit {
 	private location: Location,
 	private placeService: PlaceService,
 	private userService: UserService,
-	private toastr: ToastrService
+	private toastr: ToastrService,
+	private router: Router
 	) {	}
 
 	ngOnInit() {
-		this.getPlace();
+		//check if logged in
+		this.currentUserSub1 = this.userService.getCurrentUser().subscribe(user => {
+			if(user == null){
+				this.router.navigate(['/authentication']);
+				this.toastr.error("u bent niet ingelogd");
+			}
+			else{
+				this.getPlace();
+			}
+		});
 		
 		this.galleryOptions = [
 			{ 
@@ -75,9 +85,26 @@ export class DefectsComponent implements OnInit {
         ];
 	}
   
-	onSelect(defect: Defect): void {
+	onSelect(defect: Defect): void {		
+		//get last editor name
+		try{
+			this.userSub = this.userService.getUser(defect.last_editor).subscribe(user => this.lastEditor = user);
+		}catch(err){
+			//console.log(err);
+			this.lastEditor = null;
+		}
+		
+		/*
+		//if not a date, transform it into a date
+		if(Object.prototype.toString.call(defect.last_edited) !== "[object Date]"){
+			defect.last_edited = new Date(defect.last_edited.seconds);
+		}
+		if(defect.repair_date != null && Object.prototype.toString.call(defect.repair_date) !== "[object Date]"){
+			defect.repair_date = new Date(defect.repair_date.seconds);
+		}
+		*/
+		
 		this.selectedDefect = defect;
-		this.userSub = this.userService.getUser(this.selectedDefect.last_editor).subscribe(user => this.lastEditor = user);
 		
 		//fill galleryImages
 		var obj = '[';
@@ -92,33 +119,29 @@ export class DefectsComponent implements OnInit {
 		this.galleryImages = JSON.parse(obj);
 	}
 	
-	setIndex(index: number){
-		this.index = index;
-		console.log(index);
-	}
-	
 	getPlace(): void {
-		const name = this.route.snapshot.paramMap.get('name');
-		//console.log(name.toString());
-		this.placesSub = this.placeService.getPlaces().subscribe(places => {
-			this.places = places;
-			//console.log(this.places);
-		
-			for (var i = 0, len = this.places.length; i < len; i++){
-				//console.log(this.places[i] + ": " + this.places[i].name);
-				if(this.places[i].name == name.toString()){
-					this.place = this.places[i];
-					this.getDefects();
-					return;
+		const id = this.route.snapshot.paramMap.get('id');
+		this.placeSub = this.placeService.getPlace(id).subscribe(place => {
+			this.place = place;
+			
+			if(place.defects != null){
+				//change all timestamps to dates
+				for (var i = 0, len = place.defects.length; i < len; i++){
+					
+					if(Object.prototype.toString.call(this.place.defects[i].last_edited) !== "[object Date]"){
+						place.defects[i].last_edited = new Date(place.defects[i].last_edited.seconds * 1000);
+					}
+				
 				}
 			}
+			
+			this.defects = place.defects;
+		}, err => {
+			this.router.navigate(['/places']);
+			this.toastr.error("we konden de gevraagde plaats niet vinden");
 		});
 	}
 	
-	getDefects(): void {
-		this.defects = this.place.defects;
-	}
-
 	goBack(): void {
 		this.location.back();
 	}
@@ -133,7 +156,7 @@ export class DefectsComponent implements OnInit {
 		}
 		
 		//update data
-		this.currentUserSub = this.userService.getCurrentUser().subscribe(user => {
+		this.currentUserSub2 = this.userService.getCurrentUser().subscribe(user => {
 			if(user==null){
 				return;
 			}

@@ -17,7 +17,6 @@ export class UsersComponent implements OnInit {
 	
 	users: User[];
 	selectedUser;
-	index: number;
 	usersSub;
 	currentUserSub;
 	userSub;
@@ -28,6 +27,8 @@ export class UsersComponent implements OnInit {
 		//check if admin
 		this.currentUserSub = this.userService.getCurrentUser().subscribe(user => {
 			if(user == null){
+				this.router.navigate(['/authentication']);
+				this.toastr.error("u bent niet ingelogd");
 				return;
 			}
 			this.userSub = this.userService.getUser(user.uid).subscribe(user => {
@@ -45,16 +46,12 @@ export class UsersComponent implements OnInit {
 		});
 	}
 
-  onSelect(user: User): void {
+	onSelect(user: User): void {
 		this.selectedUser = user;
 	}
 	
 	getUsers(){
 		this.usersSub = this.userService.getUsers().subscribe(users => this.users = users);
-	}
-	
-	setIndex(index: number){
-		this.index = index;
 	}
 	
 	save(): void {

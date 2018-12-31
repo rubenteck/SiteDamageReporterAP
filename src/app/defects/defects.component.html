@@ -5,7 +5,7 @@
 
 	<h2>Defecten voor: {{ place?.name }}</h2>
 	<ul class="defects" *ngIf="defects; else showNoDefects">
-		<li *ngFor="let defect of defects; let i = index" [class.active]="index === i"(click)="onSelect(defect); setIndex(i)">
+		<li *ngFor="let defect of defects" [class.active]="defect == selectedDefect" (click)="onSelect(defect)">
 			{{defect?.name}}
 		</li>
 	</ul>
@@ -22,16 +22,23 @@
 	<div>
 		
 		<div style="margin-bottom: 8px;"><span>name: {{ selectedDefect.name }}</span></div>
-		<div style="margin-bottom: 8px;"><span>laatst gewijzigd op: {{ selectedDefect.last_edited.seconds * 1000 | date : "dd-MM-yyyy" }}</span></div>
+		
+		<div style="margin-bottom: 8px;"><span>laatst gewijzigd op: 
+			{{ selectedDefect.last_edited | date : "dd-MM-yyyy, HH:mm:ss" }}			<!--.seconds * 1000 for timestamp -->
+		</span>
+		</div>
+		
 		<div style="margin-bottom: 8px;"><span>laatst gewijzigd door: 
 			<span *ngIf="lastEditor; else showNoLastEditor">{{ lastEditor.display_name }}</span>
 			<ng-template #showNoLastEditor>geen user gevonden</ng-template></span>
 		</div>
+		
 		<div>
 			<label>omschrijving:
 				<input [(ngModel)]="selectedDefect.description" placeholder="omschrijving">
 			</label>
 		</div>
+		
 		<div>
 			<label>status:
 				<select [(ngModel)]="selectedDefect.status" placeholder="1">
@@ -41,6 +48,7 @@
 				</select>
 			</label>
 		</div>
+		
 		<div>
 			<label>severity:
 				<select [(ngModel)]="selectedDefect.severity" placeholder="1">
@@ -52,16 +60,19 @@
 				</select>
 			</label>
 		</div>
+		
 		<div>
 			<label>reparatie datum:
 				<input type="date" [(ngModel)]="selectedDefect.repair_date" placeholder="dd/mm/jj">
 			</label>
 		</div>
+		
 		<div>
 			<label>bevoegd persoon:
 				<input [(ngModel)]="selectedDefect.responsible_person" placeholder="bevoegd persoon">
 			</label>
 		</div>
+		
 		<div>
 			<label>bevoegde instelling:
 				<select [(ngModel)]="selectedDefect.responsible_instance">
@@ -70,6 +81,7 @@
 				</select>
 			</label>
 		</div>
+		
 		<div>
 			<label>extra info:
 				<input [(ngModel)]="selectedDefect.extra_note" placeholder="extra info">

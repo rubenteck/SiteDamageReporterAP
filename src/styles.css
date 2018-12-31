@@ -39,18 +39,33 @@ span, label {
 }
 
 input, select {
-  width: calc(100% - 20px);
+  width: calc(100% - 50px);
   height: 18px;
   margin-bottom: 8px;
   margin-left: 10px;
 }
 
+input {
+	width: calc(100% - 54px);
+}
+
 button {
-	width: calc(100% - 20px);
+	width: calc(100% - 50px);
 	height: 2em;
 	margin-bottom: 8px;
 	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.authentication{
+	margin-left: 40px;
+	width: calc(100% - 80px);
+}
+
+input.authentication{
+	width: calc(100% - 4px);
+	margin-left: 0px;
+	margin-top: 5px;
 }
 
 *:focus {
@@ -61,7 +76,7 @@ li {
 	height: 24px;
 	list-style-type:none;
 	border-bottom: 1px solid grey;
-	margin-right: 10px;
+	margin-right: 40px;
 }
 
 li:hover, a:hover {
@@ -113,4 +128,3 @@ div.menu {
 	padding:0px;
 	width: 100%;
 }
-

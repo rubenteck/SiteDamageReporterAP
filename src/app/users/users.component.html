@@ -4,7 +4,7 @@
 
 	<h2>Users:</h2>
 	<ul class="users" *ngIf="users">
-		<li *ngFor="let user of users; let i = index" [class.active]="index === i"(click)="onSelect(user); setIndex(i)">
+		<li *ngFor="let user of users" [class.active]="user === selectedUser" (click)="onSelect(user)">
 			{{user?.email}}
 		</li>
 	</ul>

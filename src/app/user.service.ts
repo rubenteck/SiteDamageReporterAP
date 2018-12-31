@@ -14,8 +14,6 @@ import { User } from './user';
 })
 export class UserService {
 	
-	doc: AngularFirestoreDocument<User>;
-	user: Observable<User>;
 	itemDoc: AngularFirestoreDocument<User>;
 	private userCollection: AngularFirestoreCollection<User>;
 	users: Observable<User[]>;
@@ -27,32 +25,22 @@ export class UserService {
 	}
 	
 	getUser(uid: string): Observable<User>{
-		this.doc = this.db.doc<User>('users/' + uid);
-		this.user = this.doc.valueChanges();
-
-		return this.user;
+		return this.db.doc<User>('users/' + uid).valueChanges();
 	}
 	
 	getUsers(): Observable<User[]>{
 		this.userCollection = this.db.collection<User>('users');
-			this.users = this.userCollection.snapshotChanges().map(actions => {
-				return actions.map(a => {
-					const data = a.payload.doc.data() as User;
-					const id = a.payload.doc.id;
-					return { id, ...data };
-				});
+		this.users = this.userCollection.snapshotChanges().map(actions => {
+			return actions.map(a => {
+				const data = a.payload.doc.data() as User;
+				const id = a.payload.doc.id;
+				return { id, ...data };
 			});
-			return this.users;
+		});
+		return this.users;
 	}
 	
 	updateUser(user: User){
-		//check logged in
-		if(this.afAuth.auth.currentUser==null){
-			this.toastr.error("please make sure you are logged in");
-			return;
-		}
-		
-		//update user
 		this.itemDoc = this.db.doc<User>('users/' + user.uid);
 		this.itemDoc.set(user, {merge:true}).then(
 			succes => {

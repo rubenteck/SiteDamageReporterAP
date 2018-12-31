@@ -18,10 +18,10 @@ import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
+	AuthenticationComponent,
     AppComponent,
     PlacesComponent,
     DefectsComponent,
-    AuthenticationComponent,
     UsersComponent
   ],
   imports: [

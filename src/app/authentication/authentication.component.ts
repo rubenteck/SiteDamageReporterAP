@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
@@ -9,16 +9,13 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.css']
 })
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent {
 
 	email: string = "";
 	password: string = "";
 
-	constructor(public afAuth: AngularFireAuth, public router: Router, private toastr: ToastrService) { }
+	constructor(public afAuth: AngularFireAuth, public router: Router, private toastr: ToastrService, private _ngZone: NgZone) { }
 
-	ngOnInit() {
-	}
-  
 	login(){
 		if(this.email == "" || this.password == ""){
 			this.toastr.error("please make sure to fill in your e-mail and password");
@@ -40,8 +37,10 @@ export class AuthenticationComponent implements OnInit {
 	loginGoogle() {
 		this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
 			succes => {
-				this.router.navigate(['/places']);
-				this.toastr.success("u bent succesvol ingelogd!");
+				this._ngZone.run(() => {
+					this.toastr.success("u bent succesvol ingelogd!");
+					this.router.navigate(['/places']);
+				});
 			},
 			error => {
 				this.toastr.error("het inloggen is mislukt");

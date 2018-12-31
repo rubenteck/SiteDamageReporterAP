@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { Place } from '../place';
 
 import { PlaceService } from '../place.service';
+import { UserService } from '../user.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -16,12 +19,21 @@ export class PlacesComponent implements OnInit {
 	
 	placesSub;
 	places: Place[];
+	currentUserSub;
 	
-	constructor(private placeService: PlaceService) { }
+	constructor(private placeService: PlaceService, private userService: UserService, private router: Router, private toastr: ToastrService) { }
 
 	ngOnInit() {
-		//setTimeout(() => {}, 5000);
-		this.getPlaces();
+		//check if logged in
+		this.currentUserSub = this.userService.getCurrentUser().subscribe(user => {
+			if(user == null){
+				this.router.navigate(['/authentication']);
+				this.toastr.error("u bent niet ingelogd");
+			}
+			else{
+				this.getPlaces();
+			}
+		});
 	}
 	
 	getPlaces(): void {
@@ -29,7 +41,7 @@ export class PlacesComponent implements OnInit {
 	}
 	
 	ngOnDestroy() {
-		
+
 	}
 	
 }

@@ -5,7 +5,7 @@ export class Defect {
 	severity: number;
 	last_edited: Date;
 	pictures: string[];
-	repair_date: Date;
+	repair_date: string;
 	responsible_person: string;
 	responsible_instance: string;
 	extra_note: string;

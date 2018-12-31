@@ -11,7 +11,7 @@ const routes: Routes = [
 	{ path: 'users', component: UsersComponent },
 	{ path: 'authentication', component: AuthenticationComponent },
 	{ path: 'places', component: PlacesComponent },
-	{ path: 'defects/:name', component: DefectsComponent }
+	{ path: 'defects/:id', component: DefectsComponent }
 ];
 
 @NgModule({

@@ -23,24 +23,12 @@ export class PlaceService {
 	private placeCollection: AngularFirestoreCollection<Place>;
 	places: Observable<Place[]>;
 	
-	index: number = 0;
+	indexPlaces: number = 0;
+	indexPlace: number = 0;
 	
 	constructor(private db: AngularFirestore, private toastr: ToastrService, private afAuth: AngularFireAuth, private userService: UserService, private router: Router) { }
 	
 	getPlaces(): Observable<Place[]> {
-		//check if logged in
-		if(this.afAuth.auth.currentUser==null && this.index < 3){
-			this.index++;
-			setTimeout(() => {
-				return this.getPlaces();
-			}, 1000);
-		}
-		else if(this.afAuth.auth.currentUser==null){
-			this.router.navigate(['/authentication']);
-			this.toastr.error("controleer of u bent ingelogd");
-		}
-		
-		//get places
 		this.placeCollection = this.db.collection<Place>('places');
 		this.places = this.placeCollection.snapshotChanges().map(actions => {
 			return actions.map(a => {
@@ -52,14 +40,11 @@ export class PlaceService {
 		return this.places;	
 	}
 	
+	getPlace(id: string): Observable<any> {
+		return this.db.doc<any>('places/' + id).valueChanges();
+	}
+	
 	updatePlace(place: Place){
-		//check logged in
-		if(this.afAuth.auth.currentUser==null){
-			this.toastr.error("controleer of u bent ingelogd");
-			return;
-		}
-		
-		//update place
 		this.itemDoc = this.db.doc<Place>('places/' + place.id);
 		this.itemDoc.update(place).then(
 			succes => {

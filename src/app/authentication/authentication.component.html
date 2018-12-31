@@ -1,19 +1,20 @@
 <div *ngIf="afAuth.user | async as user; else showLogin">
-	<h1>Hallo {{ user.displayName }}, u bent al ingelogd.</h1>
-	<button routerLink="/places">ga naar plaatsen</button>
+	<h1 class="authentication">Hallo {{ user.displayName }}, u bent al ingelogd.</h1>
+	<button class="authentication" routerLink="/places">ga naar plaatsen</button>
 </div>
 
 <ng-template #showLogin>
-	<div>
-		<label style="margin-left:10px;">e-mail:
-			<input type="email" [(ngModel)]="email" placeholder="user@email.com">
+	<div class="authentication">
+		<label>e-mail:
+			<input class="authentication" type="email" [(ngModel)]="email" placeholder="user@email.com"/>
 		</label>
 	</div>
-	<div>
-		<label style="margin-left:10px;">passwoord:
-			<input type="password" [(ngModel)]="password" placeholder="passwoord">
+	<div class="authentication">
+		<label>passwoord:
+			<input class="authentication" type="password" [(ngModel)]="password" placeholder="passwoord"/>
 		</label>
 	</div>
-	<button (click)="login()">Login</button>
-	<button (click)="loginGoogle()">Login with Google</button>
+	<br/>
+	<button class="authentication" (click)="login()">Login</button>
+	<button class="authentication" (click)="loginGoogle()">Login with Google</button>
 </ng-template>
