@@ -15,6 +15,7 @@ import { PlacesComponent } from './places/places.component';
 import { DefectsComponent } from './defects/defects.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { UsersComponent } from './users/users.component';
+import { AllDefectsComponent } from './all-defects/all-defects.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UsersComponent } from './users/users.component';
     AppComponent,
     PlacesComponent,
     DefectsComponent,
-    UsersComponent
+    UsersComponent,
+    AllDefectsComponent
   ],
   imports: [
     BrowserModule,

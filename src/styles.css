@@ -79,6 +79,17 @@ li {
 	margin-right: 40px;
 }
 
+.dot {
+	margin-top: 4px;
+	height: 18px;
+	width: 18px;
+	color: white;
+	text-align: center;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+}
+
 li:hover, a:hover {
 	background-color: #e60000;
 	color: white;

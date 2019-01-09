@@ -1,9 +1,6 @@
 <div style="float:left;width:35%;">
 	
-	<button (click)="goBack()">vorige pagina</button>
-	<br/>
-
-	<h2>Defecten voor: {{ place?.name }}</h2>
+	<h2>Alle defecten:</h2>
 	<ul class="defects" *ngIf="defects; else showNoDefects">
 		<li *ngFor="let defect of defects" [class.active]="defect == selectedDefect" (click)="onSelect(defect)">
 			<span *ngIf="defect.status==1" class="dot" style="background-color:green;">{{defect.severity}}</span>
@@ -16,7 +13,7 @@
 </div>
 
 <ng-template #showNoDefects>
-	<p style="margin-left:2em;">er zijn geen defecten voor dit lokaal</p>
+	<p style="margin-left:2em;">er zijn geen defecten gevonden</p>
 </ng-template>
 
 
@@ -27,7 +24,7 @@
 		<div style="margin-bottom: 8px;"><span>name: {{ selectedDefect.name }}</span></div>
 		
 		<div style="margin-bottom: 8px;"><span>laatst gewijzigd op: 
-			{{ selectedDefect.last_edited | date : "dd-MM-yyyy, HH:mm:ss" }}			<!--.seconds * 1000 for timestamp -->
+			{{ selectedDefect.last_edited | date : "dd-MM-yyyy, HH:mm:ss" }}
 		</span>
 		</div>
 		
