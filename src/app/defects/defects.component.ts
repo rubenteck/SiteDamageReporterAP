@@ -51,7 +51,7 @@ export class DefectsComponent implements OnInit {
 		this.currentUserSub1 = this.userService.getCurrentUser().subscribe(user => {
 			if(user == null){
 				this.router.navigate(['/authentication']);
-				this.toastr.error("u bent niet ingelogd");
+				this.toastr.error("U bent niet ingelogd");
 			}
 			else{
 				this.getPlace();
@@ -136,9 +136,19 @@ export class DefectsComponent implements OnInit {
 			}
 			
 			this.defects = place.defects;
+			this.defects = this.defects.sort((obj1, obj2) => {
+				if (obj1.last_edited < obj2.last_edited) {
+					return 1;
+				}
+			
+				if (obj1.last_edited > obj2.last_edited) {
+					return -1;
+				}
+				return 0;
+			});
 		}, err => {
 			this.router.navigate(['/places']);
-			this.toastr.error("we konden de gevraagde plaats niet vinden");
+			this.toastr.error("Gevraagde plaats kon niet gevonden worden");
 		});
 	}
 	

@@ -18,17 +18,17 @@ export class AuthenticationComponent {
 
 	login(){
 		if(this.email == "" || this.password == ""){
-			this.toastr.error("please make sure to fill in your e-mail and password");
+			this.toastr.error("Vul je e-mailadres en wachtwoord in");
 			return;
 		}
 		
 		this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password).then(
 			succes => {
-				this.toastr.success("u bent succesvol ingelogd!");
+				this.toastr.success("U bent succesvol ingelogd!");
 				this.router.navigate(['/places']);
 			},
 			error => {
-				this.toastr.error("het inloggen is mislukt");
+				this.toastr.error("Inloggen mislukt");
 				console.log(error);
 			}
 		);
@@ -38,12 +38,12 @@ export class AuthenticationComponent {
 		this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
 			succes => {
 				this._ngZone.run(() => {
-					this.toastr.success("u bent succesvol ingelogd!");
+					this.toastr.success("U bent succesvol ingelogd!");
 					this.router.navigate(['/places']);
 				});
 			},
 			error => {
-				this.toastr.error("het inloggen is mislukt");
+				this.toastr.error("Inloggen mislukt");
 				console.log(error);
 			}
 		);

@@ -4,13 +4,13 @@
 	<div class="menu" style="width:30em;height:100%;float:right;position:relative;" *ngIf="afAuth.user | async as user; else showLogin">
 		<p class="menu">Hallo {{ user.displayName }}!</p>
 		<button (click)="logout()" class="menu">Log uit</button>
-		<button routerLink="/users" class="menu">Users</button>
+		<button routerLink="/users" class="menu">Gebruikers</button>
 		<button routerLink="/allDefects" class="menu">Defecten</button>
 		<button routerLink="/places" class="menu">Plaatsen</button>
 	</div>
 	
 	<ng-template #showLogin>
-		<button routerLink="/authentication" style="width:5em;float:right" class="menu">Log in</button>
+		<button routerLink="/authentication" style="width:5em;float:right" class="menu">Inloggen</button>
 	</ng-template>
 </div>
 

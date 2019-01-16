@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent {
 	
-	title = 'DamageReporter AP';
+	title = 'AP Reporter';
   
 	constructor(public afAuth: AngularFireAuth, public router: Router, private toastr: ToastrService) { }
   
@@ -22,10 +22,10 @@ export class AppComponent {
 		//logout
 		this.afAuth.auth.signOut().then(
 			succces => {
-				this.toastr.success("u bent uitgelogd!");
+				this.toastr.success("U bent uitgelogd!");
 			},
 			error => {
-				this.toastr.error("er ging iets mis!");
+				this.toastr.error("Er ging iets mis!");
 			}
 		);
 	}

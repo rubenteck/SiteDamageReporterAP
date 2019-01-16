@@ -29,7 +29,7 @@ export class PlaceService {
 	constructor(private db: AngularFirestore, private toastr: ToastrService, private afAuth: AngularFireAuth, private userService: UserService, private router: Router) { }
 	
 	getPlaces(): Observable<Place[]> {
-		this.placeCollection = this.db.collection<Place>('places');
+		this.placeCollection = this.db.collection<Place>('places', ref => ref.orderBy('name', 'asc'));
 		this.places = this.placeCollection.snapshotChanges().map(actions => {
 			return actions.map(a => {
 				const data = a.payload.doc.data() as Place;
@@ -48,10 +48,10 @@ export class PlaceService {
 		this.itemDoc = this.db.doc<Place>('places/' + place.id);
 		this.itemDoc.update(place).then(
 			succes => {
-				this.toastr.success("het defect is aangepast!");
+				this.toastr.success("Het defect is aangepast!");
 			},
 			error => {
-				this.toastr.error("er ging iets mis!");
+				this.toastr.error("Er ging iets mis!");
 			}
 		);
 	}

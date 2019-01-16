@@ -28,7 +28,7 @@ export class PlacesComponent implements OnInit {
 		this.currentUserSub = this.userService.getCurrentUser().subscribe(user => {
 			if(user == null){
 				this.router.navigate(['/authentication']);
-				this.toastr.error("u bent niet ingelogd");
+				this.toastr.error("U bent niet ingelogd");
 			}
 			else{
 				this.getPlaces();

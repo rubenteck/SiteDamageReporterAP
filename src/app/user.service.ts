@@ -33,6 +33,7 @@ export class UserService {
 		this.users = this.userCollection.snapshotChanges().map(actions => {
 			return actions.map(a => {
 				const data = a.payload.doc.data() as User;
+				console.log(data);
 				const id = a.payload.doc.id;
 				return { id, ...data };
 			});
@@ -44,10 +45,10 @@ export class UserService {
 		this.itemDoc = this.db.doc<User>('users/' + user.uid);
 		this.itemDoc.set(user, {merge:true}).then(
 			succes => {
-				this.toastr.success("saved!");
+				this.toastr.success("Opgeslagen!");
 			},
 			error => {
-				this.toastr.error("something went wrong!");
+				this.toastr.error("Er ging iets mis!");
 				console.log(error);
 			}
 		);

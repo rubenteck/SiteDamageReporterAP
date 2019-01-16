@@ -2,7 +2,7 @@
 	
 	<br/>
 
-	<h2>Users:</h2>
+	<h2>Gebruikers:</h2>
 	<ul class="users" *ngIf="users">
 		<li *ngFor="let user of users" [class.active]="user === selectedUser" (click)="onSelect(user)">
 			{{user?.email}}
@@ -17,9 +17,9 @@
 		
 		<div style="margin-bottom: 8px;"><span>voornaam: {{ selectedUser.first_name }}</span></div>
 		<div style="margin-bottom: 8px;"><span>achternaam: {{ selectedUser.last_name }}</span></div>
-		<div style="margin-bottom: 8px;"><span>email: {{ selectedUser.email }}</span></div>
+		<div style="margin-bottom: 8px;"><span>e-mail: {{ selectedUser.email }}</span></div>
 		<div style="margin-bottom: 8px;"><span>id: {{ selectedUser.uid }}</span></div>
-		<div style="margin-bottom: 8px;"><span>naam: {{ selectedUser.display_name }}</span></div>
+		<div style="margin-bottom: 8px;"><span>naam (enkel admin): {{ selectedUser.display_name }}</span></div>
 		<div style="margin-bottom: 8px;"><span>rol: {{ selectedUser.role }}</span></div>
 		<div>
 			<label>actief:
@@ -37,6 +37,6 @@
 				</select>
 			</label>
 		</div>	
-		<button (click)="save()">save</button>
+		<button (click)="save()">Opslaan</button>
 	</div>
 </div>

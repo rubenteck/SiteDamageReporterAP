@@ -5,16 +5,16 @@
 
 <ng-template #showLogin>
 	<div class="authentication">
-		<label>e-mail:
-			<input class="authentication" type="email" [(ngModel)]="email" placeholder="user@email.com"/>
+		<label>E-mail:
+			<input class="authentication" type="email" [(ngModel)]="email" placeholder="gebruiker@e-mail.com"/>
 		</label>
 	</div>
 	<div class="authentication">
-		<label>passwoord:
-			<input class="authentication" type="password" [(ngModel)]="password" placeholder="passwoord"/>
+		<label>Wachtwoord:
+			<input class="authentication" type="password" [(ngModel)]="password" placeholder="wachtwoord"/>
 		</label>
 	</div>
 	<br/>
-	<button class="authentication" (click)="login()">Login</button>
-	<button class="authentication" (click)="loginGoogle()">Login with Google</button>
+	<button class="authentication" (click)="login()">Inloggen</button>
+	<button class="authentication" (click)="loginGoogle()">Inloggen met Google</button>
 </ng-template>

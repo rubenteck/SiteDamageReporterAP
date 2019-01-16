@@ -13,7 +13,7 @@
 </div>
 
 <ng-template #showNoDefects>
-	<p style="margin-left:2em;">er zijn geen defecten gevonden</p>
+	<p style="margin-left:2em;">Er zijn geen defecten gevonden.</p>
 </ng-template>
 
 
@@ -21,7 +21,7 @@
 	<h2 style="padding-left:0px;">Details:</h2>
 	<div>
 		
-		<div style="margin-bottom: 8px;"><span>name: {{ selectedDefect.name }}</span></div>
+		<div style="margin-bottom: 8px;"><span>titel: {{ selectedDefect.name }}</span></div>
 		
 		<div style="margin-bottom: 8px;"><span>laatst gewijzigd op: 
 			{{ selectedDefect.last_edited | date : "dd-MM-yyyy, HH:mm:ss" }}
@@ -30,13 +30,14 @@
 		
 		<div style="margin-bottom: 8px;"><span>laatst gewijzigd door: 
 			<span *ngIf="lastEditor; else showNoLastEditor">{{ lastEditor.display_name }}</span>
-			<ng-template #showNoLastEditor>geen user gevonden</ng-template></span>
+			<ng-template #showNoLastEditor>geen gebruiker gevonden</ng-template></span>
 		</div>
 		
 		<div>
-			<label>omschrijving:
-				<input [(ngModel)]="selectedDefect.description" placeholder="omschrijving">
-			</label>
+			<label>omschrijving:</label><br>
+				<textarea [(ngModel)]="selectedDefect.description" placeholder="omschrijving" name="description" style="width: 95%; height: auto;" rows="8"></textarea>
+				<!--<input [(ngModel)]="selectedDefect.description" placeholder="omschrijving">-->
+			
 		</div>
 		
 		<div>
@@ -62,7 +63,7 @@
 		</div>
 		
 		<div>
-			<label>reparatie datum:
+			<label>reparatiedatum:
 				<input type="date" [(ngModel)]="selectedDefect.repair_date" placeholder="dd/mm/jj">
 			</label>
 		</div>
@@ -88,7 +89,7 @@
 			</label>
 		</div>
 	
-		<button (click)="save()">save</button><br/>
+		<button (click)="save()">Opslaan</button><br/>
 		<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
 	
 	</div>

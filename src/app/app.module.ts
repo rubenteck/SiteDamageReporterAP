@@ -32,7 +32,7 @@ import { AllDefectsComponent } from './all-defects/all-defects.component';
     AppRoutingModule,
 	NgxGalleryModule,
 	BrowserAnimationsModule,
-	ToastrModule.forRoot({newestOnTop: false,}), // ToastrModule added
+	ToastrModule.forRoot({newestOnTop: false, progressBar: true, positionClass: 'toast-bottom-center'}), // ToastrModule added
 	AngularFireModule.initializeApp(environment.firebase),
 	AngularFirestoreModule // imports firebase/firestore, only needed for database features
   ],
