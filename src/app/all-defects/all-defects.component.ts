@@ -125,9 +125,10 @@ export class AllDefectsComponent implements OnInit {
 					for (var i = 0, len = places[x].defects.length; i < len; i++){
 					
 						if(Object.prototype.toString.call(places[x].defects[i].last_edited) !== "[object Date]"){
-							places[x].defects[i].last_edited = new Date(places[x].defects[i].last_edited.seconds * 1000);
+							
+							places[x].defects[i].last_edited = new Date((places[x].defects[i].last_edited as any).seconds * 1000);	//as any cast needed to stop error, console thinks it is a Date
+							
 						}
-						
 					}
 				}
 			
@@ -135,7 +136,7 @@ export class AllDefectsComponent implements OnInit {
 			
 			}
 			
-			//remove first empty defect
+			//remove first defect (empty)
 			this.defects = this.defects.slice(1);
 			
 		}, err => {
