@@ -7,6 +7,7 @@ import 'hammerjs';
 import { ToastrService } from 'ngx-toastr';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { Defect } from '../defect';
 import { Place } from '../place';
@@ -44,7 +45,8 @@ export class AllDefectsComponent implements OnInit {
 	private placeService: PlaceService,
 	private userService: UserService,
 	private toastr: ToastrService,
-	private router: Router
+	private router: Router,
+	public datepipe: DatePipe
 	) { }
 
 	ngOnInit() {
@@ -118,22 +120,23 @@ export class AllDefectsComponent implements OnInit {
 			//empty defects list
 			this.defects = [];
 			
-			for (var x = 0, len = places.length; x < len; x++){
-				
+			for (var x = 0; x < places.length; x++){
 				if(places[x].defects != null){
-					//change all timestamps to dates
 					for (var i = 0, len = places[x].defects.length; i < len; i++){
 					
+						//convert last edited timestamp to Date
 						if(Object.prototype.toString.call(places[x].defects[i].last_edited) !== "[object Date]"){
-							
 							places[x].defects[i].last_edited = new Date((places[x].defects[i].last_edited as any).seconds * 1000);	//as any cast needed to stop error, console thinks it is a Date
-							
 						}
+						
+						//convert repair date timestamp to String (check if string only because some old faulty date is still in db)
+						if(places[x].defects[i].repair_date != null && Object.prototype.toString.call(places[x].defects[i].repair_date) !== "[object String]"){
+							places[x].defects[i].repair_date_string = this.datepipe.transform(new Date((places[x].defects[i].repair_date as any).seconds * 1000), "yyyy-MM-dd");
+						}
+						
 					}
+					this.defects = this.defects.concat(places[x].defects);
 				}
-			
-			this.defects = this.defects.concat(places[x].defects);
-			
 			}
 			
 			//remove first defect (empty)
@@ -172,6 +175,7 @@ export class AllDefectsComponent implements OnInit {
 			//console.log(user);
 			this.selectedDefect.last_editor = user.uid;
 			this.selectedDefect.last_edited = new Date();
+			this.selectedDefect.repair_date = new Date(this.selectedDefect.repair_date_string);
 			for (var x = 0, len = this.places.length; x < len; x++){
 				if(this.places[x].defects != null){
 					for (var i = 0, len = this.places[x].defects.length; i < len; i++){

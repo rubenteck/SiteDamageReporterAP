@@ -90,14 +90,8 @@ li {
 	display: inline-block;
 }
 
-li:hover, a:hover {
-	background-color: #e60000;
-	color: white;
-	border-bottom-color: black;
-}
-
-li.active {
-	background-color: #e60000;
+li:hover, a:hover, li.active {
+	background-color: black;	/*#e60000;*/
 	color: white;
 	border-bottom-color: black;
 }

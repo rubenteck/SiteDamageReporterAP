@@ -8,6 +8,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { DatePipe } from '@angular/common'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,7 +37,10 @@ import { AllDefectsComponent } from './all-defects/all-defects.component';
 	AngularFireModule.initializeApp(environment.firebase),
 	AngularFirestoreModule // imports firebase/firestore, only needed for database features
   ],
-  providers: [AngularFireAuth],
+  providers: [
+	AngularFireAuth,
+	DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

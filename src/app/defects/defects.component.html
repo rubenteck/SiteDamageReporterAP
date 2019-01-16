@@ -1,4 +1,4 @@
-<div style="float:left;width:35%;">
+<div style="float:left;width:40%;">
 	
 	<button (click)="goBack()">vorige pagina</button>
 	<br/>
@@ -6,9 +6,9 @@
 	<h2>Defecten voor: {{ place?.name }}</h2>
 	<ul class="defects" *ngIf="defects; else showNoDefects">
 		<li *ngFor="let defect of defects" [class.active]="defect == selectedDefect" (click)="onSelect(defect)">
-			<span *ngIf="defect.status==1" class="dot" style="background-color:green;">{{defect.severity}}</span>
+			<span *ngIf="defect.status==1" class="dot" style="background-color:red;">{{defect.severity}}</span>
 			<span *ngIf="defect.status==2" class="dot" style="background-color:orange;">{{defect.severity}}</span>
-			<span *ngIf="defect.status==3" class="dot" style="background-color:red;">{{defect.severity}}</span>
+			<span *ngIf="defect.status==3" class="dot" style="background-color:green;">{{defect.severity}}</span>
 			{{defect?.name}}
 		</li>
 	</ul>
@@ -66,7 +66,7 @@
 		
 		<div>
 			<label>reparatiedatum:
-				<input type="date" [(ngModel)]="selectedDefect.repair_date" placeholder="dd/mm/jj">
+				<input type="date" [(ngModel)]="selectedDefect.repair_date_string" placeholder="dd/mm/jj">
 			</label>
 		</div>
 		

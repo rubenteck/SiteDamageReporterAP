@@ -7,6 +7,7 @@ import 'hammerjs';
 import { ToastrService } from 'ngx-toastr';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { Defect } from '../defect';
 import { Place } from '../place';
@@ -43,7 +44,8 @@ export class DefectsComponent implements OnInit {
 	private placeService: PlaceService,
 	private userService: UserService,
 	private toastr: ToastrService,
-	private router: Router
+	private router: Router,
+	public datepipe: DatePipe
 	) {	}
 
 	ngOnInit() {
@@ -128,24 +130,32 @@ export class DefectsComponent implements OnInit {
 				//change all timestamps to dates
 				for (var i = 0, len = place.defects.length; i < len; i++){
 					
+					//convert last edited
 					if(Object.prototype.toString.call(this.place.defects[i].last_edited) !== "[object Date]"){
 						place.defects[i].last_edited = new Date(place.defects[i].last_edited.seconds * 1000);
+					}
+					
+					//convert repair date timestamp to String (check if string only because some old faulty date is still in db)
+					if(this.place.defects[i].repair_date != null && Object.prototype.toString.call(this.place.defects[i].repair_date) !== "[object String]"){
+						this.place.defects[i].repair_date_string = this.datepipe.transform(new Date((this.place.defects[i].repair_date as any).seconds * 1000), "yyyy-MM-dd");
 					}
 				
 				}
 			}
 			
 			this.defects = place.defects;
-			this.defects = this.defects.sort((obj1, obj2) => {
-				if (obj1.last_edited < obj2.last_edited) {
-					return 1;
-				}
-			
-				if (obj1.last_edited > obj2.last_edited) {
-					return -1;
-				}
-				return 0;
-			});
+			if(this.defects!=null){
+				this.defects = this.defects.sort((obj1, obj2) => {
+					if (obj1.last_edited < obj2.last_edited) {
+						return 1;
+					}
+				
+					if (obj1.last_edited > obj2.last_edited) {
+						return -1;
+					}
+					return 0;
+				});
+			}
 		}, err => {
 			this.router.navigate(['/places']);
 			this.toastr.error("Gevraagde plaats kon niet gevonden worden");
@@ -173,6 +183,7 @@ export class DefectsComponent implements OnInit {
 			//console.log(user);
 			this.selectedDefect.last_editor = user.uid;
 			this.selectedDefect.last_edited = new Date();
+			this.selectedDefect.repair_date = new Date(this.selectedDefect.repair_date_string);
 			for (var i = 0, len = this.place.defects.length; i < len; i++){
 				if(this.place.defects[i].name == this.selectedDefect.name){
 					this.place.defects[i] = this.selectedDefect;
