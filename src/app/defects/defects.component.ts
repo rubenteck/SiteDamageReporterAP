@@ -170,7 +170,7 @@ export class DefectsComponent implements OnInit {
 		//input checks
 		if(this.selectedDefect.status!=1){
 			if(this.selectedDefect.repair_date==null || this.selectedDefect.responsible_person=="" || this.selectedDefect.responsible_instance==""){
-				this.toastr.error("kijk na of de velden 'reparatie datum', 'bevoegd persoon' en 'bevoegde instelling' ingevuld zijn");
+				this.toastr.error("kijk na of de velden 'reparatiedatum', 'bevoegd persoon' en 'bevoegde instelling' ingevuld zijn");
 				return;
 			}
 		}
