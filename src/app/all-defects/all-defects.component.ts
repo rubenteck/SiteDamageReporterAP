@@ -165,7 +165,7 @@ export class AllDefectsComponent implements OnInit {
 	save(): void {
 		//input checks
 		if(this.selectedDefect.status!=1){
-			if(this.selectedDefect.repair_date==null || this.selectedDefect.responsible_person=="" || this.selectedDefect.responsible_instance==""){
+			if(this.selectedDefect.repair_date_string==null || this.selectedDefect.responsible_person=="" || this.selectedDefect.responsible_instance==""){
 				this.toastr.error("kijk na of de velden 'reparatie datum', 'bevoegd persoon' en 'bevoegde instelling' ingevuld zijn");
 				return;
 			}
@@ -187,11 +187,11 @@ export class AllDefectsComponent implements OnInit {
 					for (var i = 0; i < this.places[x].defects.length; i++){
 						if(this.places[x].defects[i].name == this.selectedDefect.name){
 							//change defect values
-							this.places[x].defects[i] = this.selectedDefect;
+							this.places[x].defects[i] = { ...this.selectedDefect };
 							this.place = this.places[x];
 							delete this.place.defects[i].place_name;
 							delete this.place.defects[i].place_id;
-							delete this.place.defects[i].repair_date_string;	
+							delete this.place.defects[i].repair_date_string;					
 						}
 					}
 				}
