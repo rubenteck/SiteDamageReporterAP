@@ -22,7 +22,7 @@ export class AppComponent {
 		//logout
 		this.afAuth.auth.signOut().then(
 			succces => {
-				this.toastr.success("U bent uitgelogd!");
+				//this.toastr.success("U bent uitgelogd!");
 			},
 			error => {
 				this.toastr.error("Er ging iets mis!");
