@@ -123,7 +123,7 @@ export class AllDefectsComponent implements OnInit {
 			for (var x = 0; x < places.length; x++){
 				if(places[x].defects != null){
 					for (var i = 0, len = places[x].defects.length; i < len; i++){
-					
+						
 						//convert last edited timestamp to Date
 						if(Object.prototype.toString.call(places[x].defects[i].last_edited) !== "[object Date]"){
 							places[x].defects[i].last_edited = new Date((places[x].defects[i].last_edited as any).seconds * 1000);	//as any cast needed to stop error, console thinks it is a Date
@@ -144,7 +144,10 @@ export class AllDefectsComponent implements OnInit {
 			}
 			
 			//remove first defect (empty)
-			this.defects = this.defects.slice(1);
+			if(this.defects[0] == null){
+				this.defects = this.defects.slice(1);
+			}
+			
 			this.defects = this.defects.sort((obj1, obj2) => {
 				if (obj1.last_edited < obj2.last_edited) {
 					return 1;
@@ -180,6 +183,8 @@ export class AllDefectsComponent implements OnInit {
 			this.selectedDefect.last_editor = user.uid;
 			this.selectedDefect.last_edited = new Date();
 			this.selectedDefect.repair_date = new Date(this.selectedDefect.repair_date_string);
+			this.selectedDefect.status = +this.selectedDefect.status;
+			this.selectedDefect.severity = +this.selectedDefect.severity;
 
 			//get place
 			for (var x = 0; x < this.places.length; x++){
@@ -191,7 +196,7 @@ export class AllDefectsComponent implements OnInit {
 							this.place = this.places[x];
 							delete this.place.defects[i].place_name;
 							delete this.place.defects[i].place_id;
-							delete this.place.defects[i].repair_date_string;					
+							delete this.place.defects[i].repair_date_string;
 						}
 					}
 				}

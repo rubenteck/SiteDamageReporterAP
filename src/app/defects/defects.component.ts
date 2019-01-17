@@ -184,6 +184,9 @@ export class DefectsComponent implements OnInit {
 			this.selectedDefect.last_editor = user.uid;
 			this.selectedDefect.last_edited = new Date();
 			this.selectedDefect.repair_date = new Date(this.selectedDefect.repair_date_string);
+			this.selectedDefect.status = +this.selectedDefect.status;
+			this.selectedDefect.severity = +this.selectedDefect.severity;
+			
 			for (var i = 0, len = this.place.defects.length; i < len; i++){
 				if(this.place.defects[i].name == this.selectedDefect.name){
 					this.place.defects[i] = this.selectedDefect;
