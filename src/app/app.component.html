@@ -1,5 +1,5 @@
 <div class="menu">
-	<h1 routerLink="/places" class="menu">{{title}}</h1>
+	<img routerLink="/places" class="menu" src="/assets/img/logo.svg" alt="AP Reporter" style="margin-top: 6px; margin-left: 30px; height:40px;">
 	
 	<div class="menu" style="width:30em;height:100%;float:right;position:relative;" *ngIf="afAuth.user | async as user; else showLogin">
 		<p class="menu">Hallo {{ user.displayName }}!</p>

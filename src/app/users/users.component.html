@@ -15,14 +15,14 @@
 	<h2 style="padding-left:0px;">Details:</h2>
 	<div>
 		
-		<div style="margin-bottom: 8px;"><span>voornaam: {{ selectedUser.first_name }}</span></div>
-		<div style="margin-bottom: 8px;"><span>achternaam: {{ selectedUser.last_name }}</span></div>
-		<div style="margin-bottom: 8px;"><span>e-mail: {{ selectedUser.email }}</span></div>
-		<div style="margin-bottom: 8px;"><span>id: {{ selectedUser.uid }}</span></div>
-		<div style="margin-bottom: 8px;"><span>naam (enkel admin): {{ selectedUser.display_name }}</span></div>
-		<div style="margin-bottom: 8px;"><span>rol: {{ selectedUser.role }}</span></div>
+		<div style="margin-bottom: 8px;"><span><strong>Voornaam:</strong> {{ selectedUser.first_name }}</span></div>
+		<div style="margin-bottom: 8px;"><span><strong>Achternaam:</strong> {{ selectedUser.last_name }}</span></div>
+		<div style="margin-bottom: 8px;"><span><strong>E-mail:</strong> {{ selectedUser.email }}</span></div>
+		<div style="margin-bottom: 8px;"><span><strong>Id:</strong> {{ selectedUser.uid }}</span></div>
+		<div style="margin-bottom: 8px;"><span><strong>Naam (enkel admin):</strong> {{ selectedUser.display_name }}</span></div>
+		<div style="margin-bottom: 8px;"><span><strong>Rol:</strong> {{ selectedUser.role }}</span></div>
 		<div>
-			<label>actief:
+			<label><strong>actief:</strong>
 				<select [(ngModel)]="selectedUser.active">
 					<option value=true>ja</option>
 					<option value=false>nee</option>
@@ -30,7 +30,7 @@
 			</label>
 		</div>	
 		<div>
-			<label>admin:
+			<label><strong>admin:</strong>
 				<select [(ngModel)]="selectedUser.admin">
 					<option value=true>ja</option>
 					<option value=false>nee</option>

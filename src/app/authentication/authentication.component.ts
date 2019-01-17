@@ -24,7 +24,7 @@ export class AuthenticationComponent {
 		
 		this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password).then(
 			succes => {
-				this.toastr.success("U bent succesvol ingelogd!");
+				//this.toastr.success("U bent succesvol ingelogd!");
 				this.router.navigate(['/places']);
 			},
 			error => {
@@ -38,7 +38,7 @@ export class AuthenticationComponent {
 		this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
 			succes => {
 				this._ngZone.run(() => {
-					this.toastr.success("U bent succesvol ingelogd!");
+					//this.toastr.success("U bent succesvol ingelogd!");
 					this.router.navigate(['/places']);
 				});
 			},
