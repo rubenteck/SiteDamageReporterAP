@@ -12,4 +12,5 @@ export class Defect {
 	extra_note: string;
 	last_editor: string;
 	place_name: string;
+	place_id: string;
 }

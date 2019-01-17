@@ -134,8 +134,9 @@ export class AllDefectsComponent implements OnInit {
 							places[x].defects[i].repair_date_string = this.datepipe.transform(new Date((places[x].defects[i].repair_date as any).seconds * 1000), "yyyy-MM-dd");
 						}
 						
-						//add place name
+						//add place name and id
 						places[x].defects[i].place_name = places[x].name;
+						places[x].defects[i].place_id = places[x].id;
 						
 					}
 					this.defects = this.defects.concat(places[x].defects);
@@ -179,17 +180,23 @@ export class AllDefectsComponent implements OnInit {
 			this.selectedDefect.last_editor = user.uid;
 			this.selectedDefect.last_edited = new Date();
 			this.selectedDefect.repair_date = new Date(this.selectedDefect.repair_date_string);
-			for (var x = 0, len = this.places.length; x < len; x++){
-				if(this.places[x].defects != null){
-					for (var i = 0, len = this.places[x].defects.length; i < len; i++){
+
+			//get place
+			for (var x = 0; x < this.places.length; x++){
+				if(this.places[x].id == this.selectedDefect.place_id){
+					for (var i = 0; i < this.places[x].defects.length; i++){
 						if(this.places[x].defects[i].name == this.selectedDefect.name){
+							//change defect values
 							this.places[x].defects[i] = this.selectedDefect;
 							this.place = this.places[x];
+							delete this.place.defects[i].place_name;
+							delete this.place.defects[i].place_id;
+							delete this.place.defects[i].repair_date_string;	
 						}
 					}
 				}
 			}
-		
+			
 			this.placeService.updatePlace(this.place);
 		});
 	}
