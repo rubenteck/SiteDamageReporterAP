@@ -91,7 +91,7 @@ li {
 }
 
 li:hover, a:hover, li.active {
-	background-color: black;	/*#e60000;*/
+	background-color: rgb(110, 110, 110);	/*#e60000;*/
 	color: white;
 	border-bottom-color: black;
 }

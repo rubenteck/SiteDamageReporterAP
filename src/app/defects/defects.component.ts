@@ -53,7 +53,7 @@ export class DefectsComponent implements OnInit {
 		this.currentUserSub1 = this.userService.getCurrentUser().subscribe(user => {
 			if(user == null){
 				this.router.navigate(['/authentication']);
-				this.toastr.error("U bent niet ingelogd");
+				//this.toastr.error("U bent niet ingelogd");
 			}
 			else{
 				this.getPlace();

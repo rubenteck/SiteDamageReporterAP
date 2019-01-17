@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
 		this.currentUserSub = this.userService.getCurrentUser().subscribe(user => {
 			if(user == null){
 				this.router.navigate(['/authentication']);
-				this.toastr.error("u bent niet ingelogd");
+				//this.toastr.error("u bent niet ingelogd");
 				return;
 			}
 			this.userSub = this.userService.getUser(user.uid).subscribe(user => {
@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
 				if(user.admin != true){
 					//then return to places
 					this.router.navigate(['/places']);
-					this.toastr.error("you are not an admin");
+					this.toastr.error("u bent geen administrator");
 				}
 				else{
 					//else get users
