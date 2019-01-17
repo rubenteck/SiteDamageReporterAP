@@ -11,4 +11,5 @@ export class Defect {
 	responsible_instance: string;
 	extra_note: string;
 	last_editor: string;
+	place_name: string;
 }

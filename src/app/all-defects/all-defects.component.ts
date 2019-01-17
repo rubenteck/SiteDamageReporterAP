@@ -134,6 +134,9 @@ export class AllDefectsComponent implements OnInit {
 							places[x].defects[i].repair_date_string = this.datepipe.transform(new Date((places[x].defects[i].repair_date as any).seconds * 1000), "yyyy-MM-dd");
 						}
 						
+						//add place name
+						places[x].defects[i].place_name = places[x].name;
+						
 					}
 					this.defects = this.defects.concat(places[x].defects);
 				}
