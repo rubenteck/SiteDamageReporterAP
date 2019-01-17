@@ -19,7 +19,7 @@ body {
 }
 
 body, input[type="text"], button {
-  color: #888;
+  color: rgb(0, 0, 0);
   font-family: Arial, Cambria, Georgia;
 }
 
