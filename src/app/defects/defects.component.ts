@@ -166,6 +166,11 @@ export class DefectsComponent implements OnInit {
 		this.location.back();
 	}
 	
+	dataChanged(): void {
+		this.selectedDefect.status = +this.selectedDefect.status;
+		this.selectedDefect.severity = +this.selectedDefect.severity;
+	}
+	
 	save(): void {
 		//input checks
 		if(this.selectedDefect.status!=1){
@@ -184,8 +189,7 @@ export class DefectsComponent implements OnInit {
 			this.selectedDefect.last_editor = user.uid;
 			this.selectedDefect.last_edited = new Date();
 			this.selectedDefect.repair_date = new Date(this.selectedDefect.repair_date_string);
-			this.selectedDefect.status = +this.selectedDefect.status;
-			this.selectedDefect.severity = +this.selectedDefect.severity;
+			this.dataChanged();
 			
 			for (var i = 0, len = this.place.defects.length; i < len; i++){
 				if(this.place.defects[i].name == this.selectedDefect.name){

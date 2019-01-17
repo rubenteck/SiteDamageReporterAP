@@ -44,7 +44,7 @@
 		
 		<div>
 			<label><strong>Status:</strong>
-				<select [(ngModel)]="selectedDefect.status" placeholder="1">
+				<select [(ngModel)]="selectedDefect.status" placeholder="1" (ngModelChange)="dataChanged()">
 					<option value=1>nog niet in behandeling</option>
 					<option value=2>in behandeling</option>
 					<option value=3>opgelost</option>
@@ -54,7 +54,7 @@
 		
 		<div>
 			<label><strong>Prioriteit:</strong>
-				<select [(ngModel)]="selectedDefect.severity" placeholder="1">
+				<select [(ngModel)]="selectedDefect.severity" placeholder="1" (ngModelChange)="dataChanged()">
 					<option value=0>1</option>
 					<option value=1>2</option>
 					<option value=2>3</option>
